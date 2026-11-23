@@ -403,6 +403,24 @@ body.view-notice .gnb a[href="#notice"]{color:var(--teal)}
 .seg input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
 .seg label:has(input:checked){border-color:var(--teal);color:var(--teal-700);background:var(--teal-50)}
 .seg label.chk{border-color:var(--teal);color:var(--teal-700);background:var(--teal-50)}
+.seg.bad label{border-color:#C2410C}
+.qform input.bad,.qform textarea.bad{border-color:#C2410C}
+.qform .hint{font-weight:500;color:var(--mute)}
+.qfile{position:relative;display:flex!important;align-items:center;gap:16px;margin:0!important;padding:20px 22px;border:1.5px dashed var(--line);background:var(--bg-2);cursor:pointer;transition:border-color .2s,background .2s}
+.qfile:hover,.qfile.drag{border-color:var(--teal);background:var(--teal-50)}
+.qfile input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.qfile-ic{flex:none;width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:22px;font-weight:400;color:var(--teal)}
+.qfile-tx b{display:block;font-size:15px;font-weight:700;color:var(--ink)}
+.qfile-tx small{display:block;margin-top:4px;font-size:13px;font-weight:500;color:var(--mute);line-height:1.5}
+.qfile-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.qfile-list:empty{display:none}
+.qfile-list li{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 14px;border:1px solid var(--line);background:#fff;font-size:14px}
+.qfile-list .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.qfile-list .sz{flex:none;color:var(--mute);font-size:13px}
+.qfile-list button{flex:none;width:28px;height:28px;border:0;background:transparent;color:var(--mute);font-size:18px;line-height:1;cursor:pointer}
+.qfile-list button:hover{color:#C2410C}
+.qfile-err{display:none;margin-top:8px;color:#C2410C;font-size:13px;font-weight:600}
+.qfile-err.show{display:block}
 .qform .foot{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:8px}
 .qform .foot p{font-size:14px;color:var(--mute)}
 .qform .err{color:#C2410C;font-size:14px;font-weight:600;display:none}
@@ -1522,9 +1540,9 @@ body.menu-open .hdr-r .cta{opacity:0;pointer-events:none}
       <div><label for="q-org">상호·기관명<em>*</em></label><input id="q-org" autocomplete="organization" placeholder="예: 디파인"></div>
       <div><label for="q-name">담당자 성함<em>*</em></label><input id="q-name" autocomplete="name" placeholder="예: 홍길동 과장"></div>
       <div><label for="q-tel">연락처<em>*</em></label><input id="q-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000"></div>
-      <div><label for="q-mail">이메일</label><input id="q-mail" type="email" inputmode="email" autocomplete="email" placeholder="견적서를 받으실 주소"></div>
+      <div><label for="q-mail">이메일<em>*</em></label><input id="q-mail" type="email" inputmode="email" autocomplete="email" placeholder="견적서와 접수 확인 메일을 받으실 주소"></div>
       <div class="full">
-        <label>필요한 제작물 <span style="font-weight:500;color:var(--mute)">(여러 개 선택 가능)</span></label>
+        <label>필요한 제작물<em>*</em> <span class="hint">(1개 이상, 여러 개 선택 가능)</span></label>
         <div class="seg" id="items">
           <label><input type="checkbox" value="bundle"> 브랜딩</label>
           <label><input type="checkbox" value="logo"> 로고</label>
@@ -1542,7 +1560,32 @@ body.menu-open .hdr-r .cta{opacity:0;pointer-events:none}
           <option>2주 이내</option><option>1개월 이내</option><option>1~2개월</option><option>일정 협의</option>
         </select>
       </div>
-      <div class="full"><label for="q-msg">요청 사항</label><textarea id="q-msg" placeholder="업종, 원하는 분위기, 참고할 자료나 사이트가 있다면 적어 주세요."></textarea></div>
+      <div class="full">
+        <label>원하는 이미지·느낌<em>*</em> <span class="hint">(1개 이상, 여러 개 선택 가능)</span></label>
+        <div class="seg" id="feel">
+          <label><input type="checkbox" value="깔끔한·미니멀"> 깔끔한·미니멀</label>
+          <label><input type="checkbox" value="모던·세련된"> 모던·세련된</label>
+          <label><input type="checkbox" value="고급스러운"> 고급스러운</label>
+          <label><input type="checkbox" value="따뜻한·감성적인"> 따뜻한·감성적인</label>
+          <label><input type="checkbox" value="귀엽고 친근한"> 귀엽고 친근한</label>
+          <label><input type="checkbox" value="자연스러운·친환경"> 자연스러운·친환경</label>
+          <label><input type="checkbox" value="전통적인·클래식"> 전통적인·클래식</label>
+          <label><input type="checkbox" value="강렬한·개성 있는"> 강렬한·개성 있는</label>
+          <label><input type="checkbox" value="신뢰감 있는·전문적인"> 신뢰감 있는·전문적인</label>
+          <label><input type="checkbox" value="잘 모르겠어요·추천해 주세요"> 잘 모르겠어요 · 추천해 주세요</label>
+        </div>
+      </div>
+      <div class="full"><label for="q-msg">요청 사항<em>*</em></label><textarea id="q-msg" placeholder="업종, 원하는 분위기, 참고할 자료나 사이트가 있다면 적어 주세요."></textarea></div>
+      <div class="full">
+        <label>참고 파일 첨부 <span class="hint">(선택 · 최대 5개, 합계 10MB)</span></label>
+        <label class="qfile" id="qfileBox">
+          <input type="file" id="q-file" multiple accept=".jpg,.jpeg,.png,.gif,.webp,.heic,.pdf,.ai,.psd,.eps,.zip,.hwp,.hwpx,.doc,.docx,.ppt,.pptx,.xls,.xlsx">
+          <span class="qfile-ic" aria-hidden="true">+</span>
+          <span class="qfile-tx"><b>파일을 고르거나 여기로 끌어다 놓아 주세요</b><small>기존 로고, 참고 이미지, 원고 등 · 이미지, PDF, AI, PSD, ZIP, 한글·오피스 문서</small></span>
+        </label>
+        <ul class="qfile-list" id="qfileList"></ul>
+        <p class="qfile-err" id="qfileErr" aria-live="polite"></p>
+      </div>
       <div class="full">
         <div class="seg"><label><input type="checkbox" id="q-doc"> 견적서가 필요합니다</label><label><input type="checkbox" id="q-tax"> 세금계산서 발행이 필요합니다</label></div>
       </div>
@@ -1551,12 +1594,12 @@ body.menu-open .hdr-r .cta{opacity:0;pointer-events:none}
         <details>
           <summary>내용 보기</summary>
           <table>
-            <tr><th>수집 항목</th><td>필수: 상호·기관명, 담당자 성함, 연락처 / 선택: 이메일</td></tr>
+            <tr><th>수집 항목</th><td>필수: 상호·기관명, 담당자 성함, 연락처, 이메일, 요청 사항 / 선택: 첨부 파일</td></tr>
             <tr><th>이용 목적</th><td>견적 상담과 안내, 무료 기획안 전달</td></tr>
             <tr><th>보유 기간</th><td>요청일로부터 1년이 지나면 지체 없이 파기합니다. 계약이 체결되면 관계 법령에서 정한 기간 동안 보관합니다.</td></tr>
             <tr><th>동의 거부</th><td>동의하지 않으실 수 있습니다. 다만 동의하지 않으면 이 요청서는 보낼 수 없으며, 카카오톡 채널이나 이메일로 문의하실 수 있습니다.</td></tr>
           </table>
-          <p>접수된 정보는 Google의 클라우드(국외 서버)에 보관됩니다. 자세한 내용은 <a href="#privacy">개인정보처리방침</a>에서 확인하실 수 있습니다.</p>
+          <p>접수된 정보는 Google의 클라우드(국외 서버)에 보관되고, 무료 기획안 작성을 위해 일부 정보(이름·연락처·이메일·첨부 파일 제외)가 Anthropic(미국)으로 전송됩니다. 자세한 내용은 <a href="#privacy">개인정보처리방침</a>에서 확인하실 수 있습니다.</p>
         </details>
       </div>
       <div class="foot">
@@ -1612,8 +1655,8 @@ body.menu-open .hdr-r .cta{opacity:0;pointer-events:none}
       <h3>2. 처리하는 개인정보 항목과 수집 방법</h3>
       <table>
         <tr><th>구분</th><th>항목</th></tr>
-        <tr><td>필수</td><td>상호·기관명, 담당자 성함, 연락처</td></tr>
-        <tr><td>선택</td><td>이메일, 요청 사항 등 고객이 직접 적은 내용</td></tr>
+        <tr><td>필수</td><td>상호·기관명, 담당자 성함, 연락처, 이메일, 요청 사항 등 고객이 직접 적은 내용</td></tr>
+        <tr><td>선택</td><td>첨부 파일(로고·참고 이미지·원고 등)</td></tr>
       </table>
       <p>수집 방법: 홈페이지 견적 요청서(고객이 직접 입력하고 동의한 경우에만 접수)</p>
       <p>디파인 홈페이지는 쿠키 등 방문 기록을 자동으로 수집하는 장치를 사용하지 않습니다. 홈페이지 서비스 제공자(GitHub)가 보안 목적으로 접속 기록(IP 주소 등)을 처리할 수 있습니다.</p>
@@ -1634,8 +1677,17 @@ body.menu-open .hdr-r .cta{opacity:0;pointer-events:none}
         <tr><th>이전 국가</th><td>미국 등 Google 데이터센터가 있는 국가</td></tr>
         <tr><th>이전 일시·방법</th><td>견적 요청서를 보내는 즉시, 암호화된 네트워크(HTTPS)로 전송</td></tr>
         <tr><th>이전 항목</th><td>2번의 필수·선택 항목</td></tr>
-        <tr><th>이용 목적</th><td>견적 요청 접수 정보의 저장(Google 스프레드시트·Apps Script)</td></tr>
+        <tr><th>이용 목적</th><td>견적 요청 접수 정보와 첨부 파일의 저장(Google 스프레드시트·Google 드라이브·Apps Script)</td></tr>
         <tr><th>보유 기간</th><td>3번과 같음</td></tr>
+      </table>
+      <p>무료 브랜드 기획안 초안을 만들기 위해 아래 정보를 AI 서비스로 보냅니다. 이름·연락처·이메일·첨부 파일은 보내지 않습니다.</p>
+      <table>
+        <tr><th>받는 자</th><td>Anthropic, PBC (개인정보 문의: privacy@anthropic.com)</td></tr>
+        <tr><th>이전 국가</th><td>미국</td></tr>
+        <tr><th>이전 일시·방법</th><td>견적 요청이 접수된 뒤 자동으로, 암호화된 네트워크(HTTPS)로 전송</td></tr>
+        <tr><th>이전 항목</th><td>고객 구분, 상호·기관명, 필요한 제작물, 예상 수량, 희망 납기, 원하는 이미지·느낌, 요청 사항</td></tr>
+        <tr><th>이용 목적</th><td>무료 브랜드 기획안 초안 작성(Claude API)</td></tr>
+        <tr><th>보유 기간</th><td>기획안 작성 후 Anthropic의 API 데이터 보관 정책에 따라 삭제</td></tr>
       </table>
       <p>국외 이전을 원하지 않으시면 견적 요청서 대신 카카오톡 채널이나 이메일로 문의해 주세요. 이 경우 국외로 이전되지 않습니다.</p>
 
@@ -2395,7 +2447,7 @@ function syncPickers() {
     if (pk) pk.classList.toggle('on', cb.checked);
     cb.parentElement.classList.toggle('chk', cb.checked);
   });
-  $$('.seg input[type=radio], #q-doc, #q-tax').forEach(i => i.parentElement.classList.toggle('chk', i.checked));
+  $$('.seg input[type=radio], #feel input, #q-doc, #q-tax').forEach(i => i.parentElement.classList.toggle('chk', i.checked));
 }
 $$('.pk').forEach(p => p.addEventListener('click', () => {
   const cb = document.querySelector(`#items input[value="${p.dataset.v}"]`);
@@ -2418,7 +2470,8 @@ function composeText(d) {
     '[디파인 견적 요청]',
     `고객 구분: ${d.ctype}`, `상호·기관명: ${d.org}`, `담당자: ${d.name}`, `연락처: ${d.tel}`,
     `이메일: ${d.mail || '-'}`, `제작물: ${d.items || '-'}`, `예상 수량: ${d.qty || '-'}`,
-    `희망 납기: ${d.date || '-'}`, `요청 사항: ${d.msg || '-'}`,
+    `희망 납기: ${d.date || '-'}`, `원하는 느낌: ${d.feel || '-'}`, `요청 사항: ${d.msg || '-'}`,
+    d.fileCount ? `첨부 파일: ${d.fileCount}개 (이 메시지와 함께 따로 보내 주세요)` : '',
     [d.doc === 'Y' && '견적서 필요', d.tax === 'Y' && '세금계산서 발행 필요'].filter(Boolean).join(', ') ? `기타: ${[d.doc === 'Y' && '견적서 필요', d.tax === 'Y' && '세금계산서 발행 필요'].filter(Boolean).join(', ')}` : ''
   ].filter(Boolean).join('\n');
 }
@@ -2434,37 +2487,91 @@ function showFallback(d, failed) {
   $('#done').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 $('#q-agree').addEventListener('change', () => $('.consent').classList.remove('bad'));
+$$('#items input, #feel input').forEach(i => i.addEventListener('change', () => i.closest('.seg').classList.remove('bad')));
+$$('#q-org, #q-name, #q-tel, #q-mail, #q-msg').forEach(i => i.addEventListener('input', () => i.classList.remove('bad')));
+
+/* ---------- quote: 참고 파일 첨부 (선택) ---------- */
+const QF_MAX_FILES = 5, QF_MAX_BYTES = 10 * 1024 * 1024;
+const QF_EXT = ['jpg','jpeg','png','gif','webp','heic','pdf','ai','psd','eps','zip','hwp','hwpx','doc','docx','ppt','pptx','xls','xlsx'];
+let qFiles = [];
+const qfSize = n => n >= 1048576 ? (n / 1048576).toFixed(1) + 'MB' : Math.max(1, Math.round(n / 1024)) + 'KB';
+function qfErr(msg) { const e = $('#qfileErr'); e.textContent = msg || ''; e.classList.toggle('show', !!msg); }
+function qfRender() {
+  const ul = $('#qfileList'); ul.replaceChildren();
+  qFiles.forEach((f, i) => {
+    const li = document.createElement('li');
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = f.name;
+    const sz = document.createElement('span'); sz.className = 'sz'; sz.textContent = qfSize(f.size);
+    const x = document.createElement('button'); x.type = 'button'; x.textContent = '×'; x.setAttribute('aria-label', f.name + ' 빼기');
+    x.addEventListener('click', () => { qFiles.splice(i, 1); qfErr(''); qfRender(); });
+    li.append(nm, sz, x); ul.appendChild(li);
+  });
+}
+function qfAdd(list) {
+  let msg = '';
+  for (const f of Array.from(list || [])) {
+    const ext = (f.name.split('.').pop() || '').toLowerCase();
+    if (!QF_EXT.includes(ext)) { msg = `${f.name}: 올릴 수 없는 파일 형식이에요.`; continue; }
+    if (qFiles.some(q => q.name === f.name && q.size === f.size)) continue;
+    if (qFiles.length >= QF_MAX_FILES) { msg = `파일은 최대 ${QF_MAX_FILES}개까지 올릴 수 있어요.`; break; }
+    if (qFiles.reduce((a, q) => a + q.size, 0) + f.size > QF_MAX_BYTES) { msg = '파일은 합계 10MB까지 올릴 수 있어요. 큰 파일은 접수 후 카카오톡이나 이메일로 보내 주세요.'; continue; }
+    qFiles.push(f);
+  }
+  qfErr(msg); qfRender();
+}
+$('#q-file').addEventListener('change', e => { qfAdd(e.target.files); e.target.value = ''; });
+const qfBox = $('#qfileBox');
+['dragenter', 'dragover'].forEach(t => qfBox.addEventListener(t, e => { e.preventDefault(); qfBox.classList.add('drag'); }));
+['dragleave', 'drop'].forEach(t => qfBox.addEventListener(t, e => { e.preventDefault(); qfBox.classList.remove('drag'); }));
+qfBox.addEventListener('drop', e => qfAdd(e.dataTransfer && e.dataTransfer.files));
+function qfRead(f) {
+  return new Promise((ok, no) => {
+    const r = new FileReader();
+    r.onload = () => ok({ name: f.name, type: f.type || 'application/octet-stream', data: String(r.result).split(',')[1] || '' });
+    r.onerror = () => no(r.error);
+    r.readAsDataURL(f);
+  });
+}
+
 $('#qform').addEventListener('submit', async e => {
   e.preventDefault();
   const org = $('#q-org').value.trim(), name = $('#q-name').value.trim(), tel = $('#q-tel').value.trim();
+  const mail = $('#q-mail').value.trim(), msg = $('#q-msg').value.trim();
+  const items = $$('#items input:checked'), feel = $$('#feel input:checked');
   const err = $('#err');
-  if (!org || !name || !tel) {
-    err.textContent = '상호·기관명, 담당자 성함, 연락처를 입력해 주세요.';
-    err.classList.add('show');
-    (!org ? $('#q-org') : !name ? $('#q-name') : $('#q-tel')).focus();
-    return;
-  }
+  const fail = (text, el, box) => {
+    err.textContent = text; err.classList.add('show');
+    if (box) { box.classList.add('bad'); box.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    else if (el) { el.classList.add('bad'); el.focus(); }
+  };
+  if (!org) return fail('상호·기관명을 입력해 주세요.', $('#q-org'));
+  if (!name) return fail('담당자 성함을 입력해 주세요.', $('#q-name'));
+  if (!tel) return fail('연락처를 입력해 주세요.', $('#q-tel'));
+  if (!mail) return fail('이메일을 입력해 주세요.', $('#q-mail'));
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) return fail('이메일 주소를 다시 확인해 주세요.', $('#q-mail'));
+  if (!items.length) return fail('필요한 제작물을 1개 이상 골라 주세요.', null, $('#items'));
+  if (!feel.length) return fail('원하는 이미지·느낌을 1개 이상 골라 주세요.', null, $('#feel'));
+  if (!msg) return fail('요청 사항을 적어 주세요.', $('#q-msg'));
   if (!$('#q-agree').checked) {
-    err.textContent = '개인정보 수집·이용에 동의해 주세요.';
-    err.classList.add('show');
     $('.consent').classList.add('bad');
-    $('#q-agree').focus();
-    return;
+    return fail('개인정보 수집·이용에 동의해 주세요.', $('#q-agree'));
   }
   err.classList.remove('show');
   const d = {
-    ctype: document.querySelector('#ctype input:checked').value, org, name, tel,
-    mail: $('#q-mail').value.trim(),
-    items: $$('#items input:checked').map(i => LABEL[i.value]).join(', '),
-    qty: $('#q-qty').value.trim(), date: $('#q-date').value, msg: $('#q-msg').value.trim(),
+    ctype: document.querySelector('#ctype input:checked').value, org, name, tel, mail,
+    items: items.map(i => LABEL[i.value]).join(', '),
+    feel: feel.map(i => i.value).join(', '),
+    qty: $('#q-qty').value.trim(), date: $('#q-date').value, msg,
     doc: $('#q-doc').checked ? 'Y' : '', tax: $('#q-tax').checked ? 'Y' : '',
     consent: 'Y', website: $('#q-website').value
   };
-  if (!QUOTE_ENDPOINT) { showFallback(d, false); return; }
+  if (!QUOTE_ENDPOINT) { showFallback({ ...d, fileCount: qFiles.length }, false); return; }
   const btn = $('#sendBtn');
-  btn.disabled = true; btn.textContent = '보내는 중…';
+  btn.disabled = true; btn.textContent = qFiles.length ? '파일과 함께 보내는 중…' : '보내는 중…';
   try {
-    const res = await fetch(QUOTE_ENDPOINT, { method: 'POST', body: new URLSearchParams(d) });
+    const body = new URLSearchParams(d);
+    if (qFiles.length) body.append('files', JSON.stringify(await Promise.all(qFiles.map(qfRead))));
+    const res = await fetch(QUOTE_ENDPOINT, { method: 'POST', body });
     const r = await res.json();
     if (!r.ok) throw new Error(r.error || 'fail');
     $('#okId').textContent = r.id || '';
@@ -2473,13 +2580,14 @@ $('#qform').addEventListener('submit', async e => {
     $('#ok').focus({ preventScroll: true });
     $('#ok').scrollIntoView({ behavior: 'smooth', block: 'center' });
   } catch (x) {
-    showFallback(d, true);
+    showFallback({ ...d, fileCount: qFiles.length }, true);
   } finally {
     btn.disabled = false; btn.textContent = '견적 요청하고 무료 기획안 받기';
   }
 });
 $('#againBtn').addEventListener('click', () => {
   $('#qform').reset();
+  qFiles = []; qfRender(); qfErr('');
   $('#qform').classList.remove('sent');
   $('#ok').classList.remove('show');
   $('#done').classList.remove('show');
